@@ -1,4 +1,4 @@
-package sc.senai.twetter2.model;
+package sc.senai.twetter2.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -18,13 +18,17 @@ import java.util.UUID;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private UUID userId;
+    private Long userId;
 
     @Column(unique = true, nullable = false)
     private String username;
 
+    @Column(unique = true, nullable = false)
+    private String email;
+
+    @Column(nullable = false)
     private String password;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

@@ -5,24 +5,26 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import sc.senai.twetter2.model.User;
+import sc.senai.twetter2.dto.CreateTweetDTO;
+import sc.senai.twetter2.dto.CreateUserDTO;
+import sc.senai.twetter2.entity.User;
 import sc.senai.twetter2.service.UserService;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin("*")
 @RequestMapping("/user")
 public class UserController {
 
     private final UserService userService;
 
-    @Transactional
     @PostMapping("/create")
-    public ResponseEntity<Void> addUser(@RequestBody User user) {
+    public ResponseEntity<String> addUser(@RequestBody CreateUserDTO user) {
         try{
             userService.createUser(user);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok("User registered successfully!");
         }catch (Exception e){
             return ResponseEntity.badRequest().build();
         }

@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import sc.senai.twetter2.dto.CreateTweetDTO;
 import sc.senai.twetter2.dto.FeedDTO;
 import sc.senai.twetter2.dto.FeedItemDTO;
-import sc.senai.twetter2.model.Tweet;
-import sc.senai.twetter2.model.User;
+import sc.senai.twetter2.entity.Tweet;
+import sc.senai.twetter2.entity.User;
 import sc.senai.twetter2.repository.TweetRepository;
 import sc.senai.twetter2.repository.UserRepository;
 
@@ -24,7 +24,7 @@ public class TweetService {
     private final UserRepository userRepository;
 
     public void createTweet(CreateTweetDTO tweetDTO, JwtAuthenticationToken token) throws Exception {
-        User user = userRepository.findById(UUID.fromString(token.getName())).orElse(null);
+        User user = userRepository.findById(Long.parseLong(token.getName())).orElse(null);
 
         if(user == null){
             throw new Exception("No have user to reference this tweet!");

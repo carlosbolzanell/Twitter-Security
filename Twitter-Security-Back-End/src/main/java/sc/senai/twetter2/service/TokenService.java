@@ -1,7 +1,6 @@
 package sc.senai.twetter2.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
@@ -10,8 +9,8 @@ import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 import sc.senai.twetter2.dto.LoginRequest;
 import sc.senai.twetter2.dto.LoginResponse;
-import sc.senai.twetter2.model.Role;
-import sc.senai.twetter2.model.User;
+import sc.senai.twetter2.entity.Role;
+import sc.senai.twetter2.entity.User;
 import sc.senai.twetter2.repository.UserRepository;
 
 import java.time.Instant;

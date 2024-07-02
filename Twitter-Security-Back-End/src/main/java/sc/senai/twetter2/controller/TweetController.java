@@ -10,6 +10,7 @@ import sc.senai.twetter2.service.TweetService;
 
 @RestController
 @RequestMapping("/tweet")
+@CrossOrigin("*")
 @RequiredArgsConstructor
 public class TweetController {
 

@@ -1,4 +1,4 @@
-package sc.senai.twetter2.model;
+package sc.senai.twetter2.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

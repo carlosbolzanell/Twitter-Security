@@ -3,8 +3,9 @@ package sc.senai.twetter2.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import sc.senai.twetter2.model.Role;
-import sc.senai.twetter2.model.User;
+import sc.senai.twetter2.dto.CreateUserDTO;
+import sc.senai.twetter2.entity.Role;
+import sc.senai.twetter2.entity.User;
 import sc.senai.twetter2.repository.RoleRepository;
 import sc.senai.twetter2.repository.UserRepository;
 
@@ -20,17 +21,16 @@ public class UserService {
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    public void createUser(User user) throws Exception {
-        Optional<User> optionalUser = userRepository.findByUsername(user.getUsername());
+    public void createUser(CreateUserDTO user) throws Exception {
+        Optional<User> optionalUser = userRepository.findByUsername(user.username());
         Role basicRole = roleRepository.findByName(Role.Values.BASIC.name());
 
         if (optionalUser.isPresent()) {
             throw new Exception("User already exist on database!");
         }
+        User userCreated = new User(null, user.username(), user.email(), passwordEncoder.encode(user.password()), Set.of(basicRole));
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(Set.of(basicRole));
-        userRepository.save(user);
+        userRepository.save(userCreated);
     }
 
     public List<User> getUsers(){
