@@ -1,13 +1,18 @@
 package sc.senai.twetter2.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
 
 @Entity
 @Table(name = "tb_tweets")
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 public class Tweet {
@@ -21,5 +26,6 @@ public class Tweet {
 
     private String contet;
 
+    @CreationTimestamp
     private Instant creationTimestamp;
 }

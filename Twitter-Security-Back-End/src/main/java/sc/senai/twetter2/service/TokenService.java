@@ -1,6 +1,7 @@
 package sc.senai.twetter2.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
@@ -9,11 +10,13 @@ import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 import sc.senai.twetter2.dto.LoginRequest;
 import sc.senai.twetter2.dto.LoginResponse;
+import sc.senai.twetter2.model.Role;
 import sc.senai.twetter2.model.User;
 import sc.senai.twetter2.repository.UserRepository;
 
 import java.time.Instant;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -34,11 +37,14 @@ public class TokenService {
         Instant now = Instant.now();
         long expiresIn = 300L;
 
+        String scopes = user.getRoles().stream().map(Role::getName).collect(Collectors.joining(" ")).toUpperCase();
+
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("tweeter2")
                 .subject(user.getUserId().toString())
-                .expiresAt(now.plusSeconds(expiresIn))
                 .issuedAt(now)
+                .expiresAt(now.plusSeconds(expiresIn))
+                .claim("scope", scopes)
                 .build();
 
         var jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
