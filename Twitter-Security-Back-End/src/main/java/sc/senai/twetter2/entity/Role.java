@@ -3,6 +3,9 @@ package sc.senai.twetter2.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_roles")
@@ -15,6 +18,9 @@ public class Role {
     private Long id;
 
     private String name;
+
+    @ManyToMany
+    private Set<Authorite> authoritys;
 
     @Getter
     public enum Values {

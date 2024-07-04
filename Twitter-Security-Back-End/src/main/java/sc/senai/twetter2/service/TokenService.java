@@ -6,9 +6,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 import sc.senai.twetter2.dto.LoginRequest;
 import sc.senai.twetter2.dto.LoginResponse;
+import sc.senai.twetter2.dto.UserResponseDTO;
 import sc.senai.twetter2.entity.Role;
 import sc.senai.twetter2.entity.User;
 import sc.senai.twetter2.repository.UserRepository;
@@ -34,7 +36,7 @@ public class TokenService {
         }
 
         Instant now = Instant.now();
-        long expiresIn = 300L;
+        long expiresIn = 60L * 30L; //30 minutos
 
         String scopes = user.getRoles().stream().map(Role::getName).collect(Collectors.joining(" ")).toUpperCase();
 
@@ -43,7 +45,7 @@ public class TokenService {
                 .subject(user.getUserId().toString())
                 .issuedAt(now)
                 .expiresAt(now.plusSeconds(expiresIn))
-                .claim("scope", scopes)
+                .claim("role", scopes)
                 .build();
 
         var jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
@@ -51,4 +53,12 @@ public class TokenService {
         return new LoginResponse(jwtValue, expiresIn );
     }
 
+    public UserResponseDTO getUser(JwtAuthenticationToken token) {
+        System.out.println(token);
+        return new UserResponseDTO("Carlos", "Carlos@email");
+        //        Optional<User> optionalUser = userRepository.findById(Long.parseLong(token.getName()));
+//        User user = optionalUser.orElse(null);
+//        assert user != null;
+//        return new UserResponseDTO(user.getUsername(), user.getEmail());
+    }
 }
