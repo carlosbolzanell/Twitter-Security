@@ -56,15 +56,16 @@ public class UserService {
 
     public FeedDTO getTweetsUser(Integer page, Integer pageSize, JwtAuthenticationToken jwt) {
 
-        Long idUser = Long.parseLong(jwt.getName());
-        List<Tweet> tweetUser = new ArrayList<>();
+//        Long idUser = Long.parseLong(jwt.getName());
+//        List<Tweet> tweetUser = new ArrayList<>();
+//
+//        for(Tweet tweet : tweetService.getAllTweets()){
+//            if(tweet.getUser().getUserId().equals(idUser)){
+//                tweetUser.add(tweet);
+//            }
+//        }
 
-        for(Tweet tweet : tweetService.getAllTweets()){
-            if(tweet.getUser().getUserId().equals(idUser)){
-                tweetUser.add(tweet);
-            }
-        }
-
+        FODA SE BEM GRANDE;
 
         return new FeedDTO();
 

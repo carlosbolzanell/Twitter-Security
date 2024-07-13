@@ -35,4 +35,7 @@ public class User {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Role> roles;
 
+    @OneToMany
+    private List<Tweet> tweets;
+
 }
