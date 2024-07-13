@@ -14,6 +14,7 @@ import sc.senai.twetter2.entity.User;
 import sc.senai.twetter2.repository.TweetRepository;
 import sc.senai.twetter2.repository.UserRepository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -40,6 +41,10 @@ public class TweetService {
 
         return new FeedDTO(tweets.getContent(), page, pageSize, tweets.getTotalPages(), tweets.getTotalElements());
 
+    }
+
+    public List<Tweet> getAllTweets(){
+        return tweetRepository.findAll();
     }
 
 }
